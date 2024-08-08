@@ -10,6 +10,7 @@ public class Board : MonoBehaviour
     public Vector3Int spawnPosition;
     public Vector2Int boardSize = new Vector2Int(10, 20);
 
+    
     public RectInt Bounds
     {
         get
@@ -70,7 +71,7 @@ public class Board : MonoBehaviour
         {
             Vector3Int tilePositon = piece.cells[i] + position;
 
-            if (bounds.Contains((Vector2Int)tilePositon))
+            if (!bounds.Contains((Vector2Int)tilePositon))
             {
                 return false;
             }
