@@ -7,12 +7,6 @@ public class GameManager : MonoBehaviour
     public static GameManager gm;
     public int score;
     public int highScore;
-
-    public float gameTime;
-    public float maxGameTime = 2 * 10f;
-
-    public PoolManager pool;
-    public Rigidbody2D player;
     // Start is called before the first frame update
 
     private void Awake()
@@ -41,12 +35,5 @@ public class GameManager : MonoBehaviour
             highScore = score;
             PlayerPrefs.SetInt("HighScore", highScore); // 최고 스코어를 저장
         }
-
-        gameTime += Time.deltaTime;
-
-        if(gameTime > maxGameTime)
-        {
-            gameTime = maxGameTime;
-        } 
     }
 }
