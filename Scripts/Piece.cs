@@ -16,6 +16,9 @@ public class Piece : MonoBehaviour
     private float moveTime;
     private float lockTime;
 
+    public SettingMenu sm;
+    private bool stopGame;
+
     public void Initialize(Board board, Vector3Int position, TetrominoData data)
     {
         this.data = data;
@@ -38,8 +41,18 @@ public class Piece : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        sm = FindObjectOfType<SettingMenu>();
+        stopGame = sm.GameIsPaused = false;
+    }
     private void Update()
     {
+        // Update stopGame state
+        stopGame = sm.GameIsPaused;
+
+        if (stopGame) return; // If the game is paused, skip the rest of the update
+
         board.Clear(this);
 
         // We use a timer to allow the player to make adjustments to the piece

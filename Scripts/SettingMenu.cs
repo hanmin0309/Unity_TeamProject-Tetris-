@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+//using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.UI;
@@ -13,6 +14,10 @@ public class SettingMenu : MonoBehaviour
     Resolution[] resolutions;
 
     public GameObject panel;
+
+    public bool GameIsPaused = false;
+
+    //public GameObject pauseMenuUI;
 
 
     private void Start()
@@ -44,13 +49,18 @@ public class SettingMenu : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            TogglePanel();
+            StopGame();
+            
         }
     }
-    void TogglePanel()
+    void StopGame()
     {
         // 패널의 활성화 상태를 반전
         panel.SetActive(!panel.activeSelf);
+        GameIsPaused = panel.activeSelf;
+
+        Time.timeScale = 0f;
+
     }
     public void SetResolution(int resolutionIndex)
     {
@@ -77,4 +87,18 @@ public class SettingMenu : MonoBehaviour
         Debug.Log("Quit");
         Application.Quit();
     }
+    
+    public void ResumeGame()
+    {
+        panel.SetActive(!panel.activeSelf);
+        Time.timeScale = 1f;
+        GameIsPaused = false;
+        
+    }
+
+    //public void pause()
+    //{
+    //    pauseMenuUI.SetActive(true);
+
+    //}
 }
