@@ -16,4 +16,9 @@ public class Player : MonoBehaviour
     {
         //anim.SetTrigger("doAttack");
     }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        anim.SetTrigger("doAttack");
+    }
 }

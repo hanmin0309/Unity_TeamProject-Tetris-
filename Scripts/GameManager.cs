@@ -5,14 +5,21 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public static GameManager gm;
+
+    [Header("# Game control")]
+    public float gameTime;
+    public bool bossTime = false;
+    public float maxGameTime = 2 * 10f;
+
+    [Header("# Player Info")]
+    public int kill;
     public int score;
     public int highScore;
 
-    public float gameTime;
-    public float maxGameTime = 2 * 10f;
-
+    [Header("# Game object")]
     public PoolManager pool;
     public Rigidbody2D player;
+
     // Start is called before the first frame update
 
     private void Awake()
@@ -49,4 +56,6 @@ public class GameManager : MonoBehaviour
             gameTime = maxGameTime;
         } 
     }
+
+    
 }
