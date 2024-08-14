@@ -2,11 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using Firebase.Auth;
 using Firebase;
 using Firebase.Extensions;
 using System;
 using System.Threading.Tasks;
+
 
 
 public class LoginSystem : MonoBehaviour
@@ -18,7 +20,8 @@ public class LoginSystem : MonoBehaviour
     public GameObject loginPage, signUpPage, profilePage, notification;
     public Text profileUserEmail, profileUserName, NotifiTitle, NotifiMessage, checkPasswordText;
 
-    public Button loginButton, profileButton;
+    public Button loginButton, profileButton, startButton, optionButton;
+    public Text profileButtonText;
 
     Firebase.Auth.FirebaseAuth auth;
     Firebase.Auth.FirebaseUser user;
@@ -73,6 +76,13 @@ public class LoginSystem : MonoBehaviour
         signupPassword1.onValueChanged.AddListener(delegate { CheckPassword(); });
 
     }
+    public void OpenProfile()
+    {
+        Debug.Log("프로필");
+        loginPage.SetActive(false);
+        signUpPage.SetActive(false);
+        profilePage.SetActive(true);
+    }
 
     private void CheckPassword()
     {
@@ -93,14 +103,6 @@ public class LoginSystem : MonoBehaviour
         }
     }
 
-
-    public void OpenProfile()
-    {
-        Debug.Log("프로필");
-        loginPage.SetActive(false);
-        profilePage.SetActive(true);
-    }
-
     public void ShowNotification(string title, string message)
     {
         NotifiTitle.text = "" + title;
@@ -109,6 +111,14 @@ public class LoginSystem : MonoBehaviour
         notification.SetActive(true);
     }
 
+    public void OnExit()
+    {
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
+        Application.Quit(); // 어플리케이션 종료
+#endif
+    }
 
     public void Back()
     {
@@ -131,6 +141,12 @@ public class LoginSystem : MonoBehaviour
         notification.SetActive(false);
     }
 
+    public void OpenGame()
+    {
+        SceneManager.LoadScene("Tetris");
+
+    }
+
     public void Create()
     {
         if (string.IsNullOrEmpty(signupUserName.text))
@@ -142,60 +158,6 @@ public class LoginSystem : MonoBehaviour
         CreateUser(signupEmail.text, signupPassword.text, signupUserName.text);
 
     }
-
-
-    public void LoginUser()
-    {
-        Login(email.text, password.text);
-    }
-    public void Login(string email, string password)
-    {
-        //FirebaseAuthManager.Instance.Login(email.text, password.text);
-        auth.SignInWithEmailAndPasswordAsync(email, password).ContinueWithOnMainThread(task =>
-        {
-            if (task.IsCanceled)
-            {
-                Debug.LogError("SignInWithEmailAndPasswordAsync was canceled.");
-                return;
-            }
-            if (task.IsFaulted)
-            {
-
-                Debug.LogError("SignInWithEmailAndPasswordAsync encountered an error: " + task.Exception);
-
-                foreach (Exception exception in task.Exception.Flatten().InnerExceptions)
-                {
-                    Firebase.FirebaseException firebaseEx = exception as Firebase.FirebaseException;
-                    if (firebaseEx != null)
-                    {
-                        var errorCode = (AuthError)firebaseEx.ErrorCode;
-                        ShowNotification(errorTitle, GetErrorMessage(errorCode));
-
-                    }
-                }
-                return;
-            }
-
-            Firebase.Auth.AuthResult result = task.Result;
-            Debug.LogFormat("User signed in successfully: {0} ({1})",
-                result.User.DisplayName, result.User.UserId);
-
-            DataSaver.instance.userId = result.User.UserId;
-            DataSaver.instance.LoadDataFn();
-
-            OpenProfile();
-        });
-
-    }
-
-    public void Logout()
-    {
-        auth.SignOut();
-        profileUserEmail.text = "";
-        profileUserName.text = "";
-        OpenLoginPage();
-    }
-
     void CreateUser(string email, string password, string userName)
     {
         if (signupPassword.text != signupPassword1.text)
@@ -256,6 +218,59 @@ public class LoginSystem : MonoBehaviour
         });
     }
 
+    public void LoginUser()
+    {
+        Login(email.text, password.text);
+    }
+    public void Login(string email, string password)
+    {
+        //FirebaseAuthManager.Instance.Login(email.text, password.text);
+        auth.SignInWithEmailAndPasswordAsync(email, password).ContinueWithOnMainThread(task =>
+        {
+            if (task.IsCanceled)
+            {
+                Debug.LogError("SignInWithEmailAndPasswordAsync was canceled.");
+                return;
+            }
+            if (task.IsFaulted)
+            {
+
+                Debug.LogError("SignInWithEmailAndPasswordAsync encountered an error: " + task.Exception);
+
+                foreach (Exception exception in task.Exception.Flatten().InnerExceptions)
+                {
+                    Firebase.FirebaseException firebaseEx = exception as Firebase.FirebaseException;
+                    if (firebaseEx != null)
+                    {
+                        var errorCode = (AuthError)firebaseEx.ErrorCode;
+                        ShowNotification(errorTitle, GetErrorMessage(errorCode));
+
+                    }
+                }
+                return;
+            }
+
+            Firebase.Auth.AuthResult result = task.Result;
+            Debug.LogFormat("User signed in successfully: {0} ({1})",
+                result.User.DisplayName, result.User.UserId);
+
+            DataSaver.instance.userId = result.User.UserId;
+            DataSaver.instance.LoadDataFn();
+
+            OpenProfile();
+        });
+
+    }
+
+    public void Logout()
+    {
+        auth.SignOut();
+        profileUserEmail.text = "";
+        profileUserName.text = "";
+        OpenLoginPage();
+    }
+
+
     void InitializeFirebase()
     {
         auth = Firebase.Auth.FirebaseAuth.DefaultInstance;
@@ -275,7 +290,10 @@ public class LoginSystem : MonoBehaviour
                 isSignIn = false;
 
                 loginButton.gameObject.SetActive(true);
-                profileButton.gameObject.SetActive(false);
+                startButton.gameObject.SetActive(false);
+                profileButton.GetComponent<Button>().interactable = false;
+                profileButtonText.color = Color.gray;
+
             }
             user = auth.CurrentUser;
             if (signedIn)
@@ -286,7 +304,9 @@ public class LoginSystem : MonoBehaviour
                 Debug.Log("Signed in " + user.DisplayName);
 
                 loginButton.gameObject.SetActive(false);
-                profileButton.gameObject.SetActive(true);
+                startButton.gameObject.SetActive(true);
+                profileButton.GetComponent<Button>().interactable = true;
+                profileButtonText.color = Color.white;
 
                 profileUserName.text = "" + user.DisplayName;
                 profileUserEmail.text = "" + user.Email;
@@ -308,14 +328,6 @@ public class LoginSystem : MonoBehaviour
         Logout();
     }
 
-    public void OnExit()
-    {
-#if UNITY_EDITOR
-        UnityEditor.EditorApplication.isPlaying = false;
-#else
-        Application.Quit(); // 어플리케이션 종료
-#endif
-    }
 
     void UpdateUserProfile(string uerName)
     {
