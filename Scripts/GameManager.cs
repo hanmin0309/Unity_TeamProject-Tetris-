@@ -19,6 +19,7 @@ public class GameManager : MonoBehaviour
     [Header("# Game object")]
     public PoolManager pool;
     public Rigidbody2D player;
+    public Rigidbody2D bossEndPoint;
 
     // Start is called before the first frame update
 
