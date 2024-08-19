@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1045 &1
+EditorBuildSettings:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/Menu1.unity
+    guid: db342f94ec5b7b74494bfe92213cf8d0
+  - enabled: 1
+    path: Assets/Scenes/Tetris_Fighter.unity
+    guid: 9b367dda771a8854da37f24cd918fe51
+  - enabled: 0
+    path: Assets/Scenes/LoginFeature.unity
+    guid: 2cda990e2423bbf4892e6590ba056729
+  - enabled: 0
+    path: Assets/Scenes/Tetris.unity
+    guid: 22434912ee7922a48a123c102f7ceede
+  m_configObjects: {}
