@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "196230423421",
+    "firebase_url": "https://daooltetris-default-rtdb.firebaseio.com",
+    "project_id": "daooltetris",
+    "storage_bucket": "daooltetris.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:196230423421:android:ae4cacefa31c532cd12214",
+        "android_client_info": {
+          "package_name": "com.daool.tetris"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCybALXVjg5tR62HlCwwfKTVs_ZSE0J3nA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
