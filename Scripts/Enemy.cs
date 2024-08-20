@@ -36,7 +36,7 @@ public class Enemy : MonoBehaviour
 
     private void OnEnable()
     {
-        bossEndPoint = GameManager.gm.bossEndPoint.GetComponent<Rigidbody2D>();
+        //bossEndPoint = GameManager.gm.bossEndPoint.GetComponent<Rigidbody2D>();
         target = GameManager.gm.player.GetComponent<Rigidbody2D>();
         isLive = true;
         coll.enabled = true;
@@ -44,6 +44,7 @@ public class Enemy : MonoBehaviour
         spriter.sortingOrder = 2;
         anim.SetBool("Dead", false);
         health = maxHealth;
+        hpSlider.value = 1;
     }
 
 
@@ -84,64 +85,64 @@ public class Enemy : MonoBehaviour
 
 
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (!collision.CompareTag("Player") || !isLive)
-        {
-            return;
-        }
+    //private void OnTriggerEnter2D(Collider2D collision)
+    //{
+    //    if (!collision.CompareTag("Player") || !isLive)
+    //    {
+    //        return;
+    //    }
 
-        Debug.Log("충돌");
-        //gameObject.SetActive(false);
-        StartCoroutine(KnockBack());
-        health -= 3;
-        Debug.Log("체력 : " + health);
-        if (health > 0)
-        {
-            anim.SetTrigger("Hit");
-        }
-        else
-        {
-            isLive = false;
-            coll.enabled = false;
-            rigid.simulated = false;
-            spriter.sortingOrder = 1;
-            anim.SetBool("Dead", true);
-            GameManager.gm.kill++;
-            //Dead();
-        }
-    }
+    //    Debug.Log("충돌");
+    //    //gameObject.SetActive(false);
+    //    StartCoroutine(KnockBack());
+    //    health -= 3;
+    //    Debug.Log("체력 : " + health);
+    //    if (health > 0)
+    //    {
+    //        anim.SetTrigger("Hit");
+    //    }
+    //    else
+    //    {
+    //        isLive = false;
+    //        coll.enabled = false;
+    //        rigid.simulated = false;
+    //        spriter.sortingOrder = 1;
+    //        anim.SetBool("Dead", true);
+    //        GameManager.gm.kill++;
+    //        //Dead();
+    //    }
+    //}
 
-    private void OnTriggerStay2D(Collider2D collision)
-    {
-        Debug.Log("TriggerStay");
+    //private void OnTriggerStay2D(Collider2D collision)
+    //{
+    //    Debug.Log("TriggerStay");
 
-        if (!collision.CompareTag("Player") || !isLive)
-        {
-            return;
-        }
+    //    if (!collision.CompareTag("Player") || !isLive)
+    //    {
+    //        return;
+    //    }
 
-        Debug.Log("충돌");
-        //gameObject.SetActive(false);
-        StartCoroutine(KnockBack());
-        health -= 3;
-        Debug.Log("체력 : " + health);
-        if (health > 0)
-        {
-            anim.SetTrigger("Hit");
-        }
-        else
-        {
-            isLive = false;
-            coll.enabled = false;
-            rigid.simulated = false;
-            spriter.sortingOrder = 1;
-            anim.SetBool("Dead", true);
-            GameManager.gm.kill++;
+    //    Debug.Log("충돌");
+    //    //gameObject.SetActive(false);
+    //    StartCoroutine(KnockBack());
+    //    health -= 3;
+    //    Debug.Log("체력 : " + health);
+    //    if (health > 0)
+    //    {
+    //        anim.SetTrigger("Hit");
+    //    }
+    //    else
+    //    {
+    //        isLive = false;
+    //        coll.enabled = false;
+    //        rigid.simulated = false;
+    //        spriter.sortingOrder = 1;
+    //        anim.SetBool("Dead", true);
+    //        GameManager.gm.kill++;
 
-            //Dead();
-        }
-    }
+    //        //Dead();
+    //    }
+    //}
 
     IEnumerator KnockBack()
     {
@@ -153,6 +154,31 @@ public class Enemy : MonoBehaviour
 
     }
 
+    public void TakeDamage()
+    {
+        Debug.Log("데미지 입음");
+        StartCoroutine(KnockBack());
+        health -= 3;
+        hpSlider.value = health / maxHealth;
+        hpText.text = health + "/" + maxHealth ;
+
+        if (health > 0)
+        {
+            anim.SetTrigger("Hit");
+
+        }
+        else
+        {
+            isLive = false;
+            coll.enabled = false;
+            rigid.simulated = false;
+            spriter.sortingOrder = 1;
+            anim.SetBool("Dead", true);
+            GameManager.gm.kill++;
+
+            //Dead();
+        }
+    }
     public void Dead()
     {
         if(type == "Boss")

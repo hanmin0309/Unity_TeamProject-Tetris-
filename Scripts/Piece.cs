@@ -141,6 +141,7 @@ public class Piece : MonoBehaviour
     private void Lock()
     {
         board.Set(this);
+        board.AttackEnemy();
         board.ClearLines();
         board.SpawnPiece();
     }
