@@ -1754,11 +1754,6 @@ RectTransform:
   m_AnchoredPosition: {x: 5, y: 0}
   m_SizeDelta: {x: -20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!50 &624103880 stripped
-Rigidbody2D:
-  m_CorrespondingSourceObject: {fileID: 946923265567898047, guid: d8b656cc9611d8348850f92c4c481645, type: 3}
-  m_PrefabInstance: {fileID: 920931820}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &633643837 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7060818670397988829, guid: d8b656cc9611d8348850f92c4c481645, type: 3}
@@ -2594,6 +2589,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d8b656cc9611d8348850f92c4c481645, type: 3}
+--- !u!50 &920931821 stripped
+Rigidbody2D:
+  m_CorrespondingSourceObject: {fileID: 946923265567898047, guid: d8b656cc9611d8348850f92c4c481645, type: 3}
+  m_PrefabInstance: {fileID: 920931820}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &929860127
 GameObject:
   m_ObjectHideFlags: 0
@@ -2662,7 +2662,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 939130971}
-  - component: {fileID: 939130970}
+  - component: {fileID: 939130972}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -2670,32 +2670,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &939130970
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 939130969}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ae663f366c5ca4d459e61f56f86a9349, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gameTime: 0
-  bossTime: 0
-  maxGameTime: 20
-  health: 0
-  MaxHealth: 0
-  kill: 0
-  score: 0
-  highScore: 0
-  pool: {fileID: 1212456123}
-  player: {fileID: 624103880}
-  bossEndPoint: {fileID: 929860129}
-  enemyKillText: {fileID: 117551704}
-  scoreText: {fileID: 1606473750}
-  highScoreText: {fileID: 992316513}
 --- !u!4 &939130971
 Transform:
   m_ObjectHideFlags: 0
@@ -2711,6 +2685,32 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &939130972
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 939130969}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae663f366c5ca4d459e61f56f86a9349, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameTime: 0
+  bossTime: 0
+  maxGameTime: 20
+  health: 0
+  maxHealth: 0
+  kill: 0
+  score: 0
+  highScore: 0
+  pool: {fileID: 1212456123}
+  player: {fileID: 920931821}
+  bossEndPoint: {fileID: 929860129}
+  enemyKillText: {fileID: 117551704}
+  scoreText: {fileID: 1606473750}
+  highScoreText: {fileID: 992316513}
 --- !u!1 &953604786
 GameObject:
   m_ObjectHideFlags: 0
@@ -3821,6 +3821,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1212456124}
   - component: {fileID: 1212456123}
+  - component: {fileID: 1212456125}
   m_Layer: 0
   m_Name: PoolManager
   m_TagString: Untagged
@@ -3843,6 +3844,7 @@ MonoBehaviour:
   prefabs:
   - {fileID: 6976007415580232363, guid: 82e8f160e6f591d4bb1169d98ffbb241, type: 3}
   - {fileID: 6976007415580232363, guid: 6ea76c4bf94933940996d6fa60128f15, type: 3}
+  - {fileID: 8058266480464201610, guid: eb34c3d69d1bc8540b711759ef37193c, type: 3}
   spawnCnt: 0
 --- !u!4 &1212456124
 Transform:
@@ -3859,6 +3861,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1235635442}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1212456125
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1212456122}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5d78b14efd286e84f8a6ba56098f789d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1235635441
 GameObject:
   m_ObjectHideFlags: 0
@@ -4431,7 +4445,7 @@ MonoBehaviour:
   stepDelay: 1
   moveDelay: 0.1
   lockDelay: 0.5
-  sm: {fileID: 0}
+  sm: {fileID: 328412073}
 --- !u!114 &1434150571
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5632,13 +5646,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnPoint: []
   spawnData:
-  - spawnTime: 1
+  - spawnTime: 6
     enemyCnt: 5
     spriteType: 0
     health: 6
     damage: 2
-    speed: 8
-  - spawnTime: 3
+    speed: 2
+  - spawnTime: 6
     enemyCnt: 5
     spriteType: 1
     health: 6

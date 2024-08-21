@@ -292,7 +292,7 @@ public class LoginSystem : MonoBehaviour
                 loginButton.gameObject.SetActive(true);
                 startButton.gameObject.SetActive(false);
                 profileButton.GetComponent<Button>().interactable = false;
-                //profileButtonText.color = Color.gray;
+                profileButtonText.color = Color.gray;
 
             }
             user = auth.CurrentUser;
@@ -306,11 +306,12 @@ public class LoginSystem : MonoBehaviour
                 loginButton.gameObject.SetActive(false);
                 startButton.gameObject.SetActive(true);
                 profileButton.GetComponent<Button>().interactable = true;
-                //profileButtonText.color = Color.white;
+                
 
                 profileUserName.text = "" + user.DisplayName;
                 profileUserEmail.text = "" + user.Email;
 
+                profileButtonText.color = Color.white;
 
             }
         }
