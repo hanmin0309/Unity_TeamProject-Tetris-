@@ -33,6 +33,11 @@ public class Spawner : MonoBehaviour
     {
         timer += Time.deltaTime;
 
+        if (!GameManager.gm.gamePlay)
+        {
+            return;
+        }
+
         if (wave >= spawnData.Length)
         {
             // Debug.Log("모든 레벨 완료");

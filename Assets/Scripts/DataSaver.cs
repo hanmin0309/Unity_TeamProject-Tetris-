@@ -10,6 +10,7 @@ public class DataToSave
     public string userName;
     public string userEmail;
     public int bestScore;
+    public int enemyKill;
     
 }
 
@@ -19,6 +20,8 @@ public class DataSaver : MonoBehaviour
 
     public DataToSave dts;
     public string userId;
+    public string userName;
+    public int bestScore;
     DatabaseReference dbRef;
 
     DataSaver ds;
@@ -28,6 +31,7 @@ public class DataSaver : MonoBehaviour
         {
             instance = this;
             Debug.Log("DataSaver instance initialized.");
+            DontDestroyOnLoad(gameObject);
         }
         else if (instance != this)
         {
@@ -39,6 +43,7 @@ public class DataSaver : MonoBehaviour
 
     public void SaveDataFn()
     {
+        Debug.Log("저장완료");
         string json = JsonUtility.ToJson(dts);
         dbRef.Child("users").Child(userId).SetRawJsonValueAsync(json);
     }
@@ -63,6 +68,8 @@ public class DataSaver : MonoBehaviour
             print("process data found");
 
             dts = JsonUtility.FromJson<DataToSave>(jsonData);
+            userName = dts.userName;
+            bestScore = dts.bestScore;
         }
         else
         {

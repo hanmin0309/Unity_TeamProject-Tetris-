@@ -204,6 +204,8 @@ public class LoginSystem : MonoBehaviour
                     bestScore = 0 // 초기 값 설정
                 };
                 DataSaver.instance.userId = result.User.UserId;
+                DataSaver.instance.userName = userName;
+                DataSaver.instance.bestScore = 0;
                 DataSaver.instance.SaveDataFn();
 
             }
@@ -309,7 +311,9 @@ public class LoginSystem : MonoBehaviour
                 profileUserName.text = "" + user.DisplayName;
                 profileUserEmail.text = "" + user.Email;
 
-                profileButtonText.color = Color.white;
+                DataSaver.instance.userId = user.UserId;
+                DataSaver.instance.LoadDataFn();
+                //profileButtonText.color = Color.white;
 
             }
         }

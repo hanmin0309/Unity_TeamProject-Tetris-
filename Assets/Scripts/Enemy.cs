@@ -101,12 +101,12 @@ public class Enemy : MonoBehaviour
         }
         else
         {
-            float stoppingDistance = 1.5f;
+            float stoppingDistance = 1.2f;
             Vector2 dirVec = target.position - rigid.position;
             //Debug.Log("거리 :"+dirVec.magnitude);
             if (dirVec.magnitude > stoppingDistance)
             {
-
+                anim.SetTrigger("Run");
                 Vector2 nextVec = dirVec.normalized * speed * Time.fixedDeltaTime;
                 rigid.MovePosition(rigid.position + nextVec);
                 rigid.velocity = Vector2.zero;
@@ -133,20 +133,7 @@ public class Enemy : MonoBehaviour
     }
 
 
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (!collision.CompareTag("Player") || !isLive)
-        {
-            return;
-        }
-        currentState = State.Attacking;
 
-        if (!isAttacking)
-        {
-            StartCoroutine("AttackPlayer");
-        }
-
-    }
 
     private void OnTriggerStay2D(Collider2D collision)
     {
@@ -155,8 +142,9 @@ public class Enemy : MonoBehaviour
             return;
         }
 
-        if (!isAttacking)
+        if (!isAttacking && currentState == State.Moving)
         {
+            Debug.Log("코루틴 실행");
             currentState = State.Attacking;
             StartCoroutine("AttackPlayer");
         }
@@ -167,8 +155,9 @@ public class Enemy : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
+            Debug.Log("코루틴 중단");
             currentState = State.Moving;  // 플레이어가 범위를 벗어나면 이동 상태로 전환
-            StopCoroutine(AttackPlayer());  // 코루틴 중지
+            StopCoroutine("AttackPlayer");  // 코루틴 중지
             isAttacking = false;
         }
     }
@@ -212,25 +201,28 @@ public class Enemy : MonoBehaviour
         if (!isLive)
             yield break;
 
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(1f);
 
         while (currentState == State.Attacking)
         {
             if (type == "Boss")
             {
                 Debug.Log("보스 공격");
+                anim.SetTrigger("Attack");
                 target.GetComponent<Player>().TakeDamage(damage);
                 yield return new WaitForSeconds(5f);
             }
             else
             {
                 Debug.Log("일반몹이 공격");
+                anim.SetTrigger("Attack");
                 target.GetComponent<Player>().TakeDamage(damage);
                 yield return new WaitForSeconds(3f);
             }
         }
-        isAttacking = false;
 
+        anim.SetTrigger("Idle");
+        //isAttacking = false;
     }
 
     public void CheckHealth()

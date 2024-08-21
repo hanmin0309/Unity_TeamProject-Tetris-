@@ -28,6 +28,12 @@ public class Player : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
+        if(health <= 0)
+        {
+            anim.SetTrigger("doDie");
+            return;
+        }
+
         anim.SetTrigger("doHit");
         health -= damage;
         //Debug.Log("슬라이더 값" + (float) health / maxHealth);
@@ -35,8 +41,6 @@ public class Player : MonoBehaviour
         playerHpText.text = health + "/" + maxHealth;
         GameManager.gm.health = health;
     }
-
-
 
     public void AttackMotion()
     {

@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
     public static GameManager gm;
 
     [Header("# Game control")]
+    public bool gamePlay;
     public float gameTime;
     public bool bossTime = false;
     public float maxGameTime = 2 * 10f;
@@ -43,6 +44,8 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject); // 이미 gm이 존재하면 새로 생성된 GameManager를 삭제
         }
 
+        gamePlay = true;
+
     }
     void Start()
     {
@@ -52,10 +55,21 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+        if (!gamePlay)
+        {
+            return;
+        }
+
         if (score > highScore)
         {
             highScore = score;
             PlayerPrefs.SetInt("HighScore", highScore); // 최고 스코어를 저장
+        }
+
+        if(health <= 0)
+        {
+            GameOver();
         }
 
         gameTime += Time.deltaTime;
@@ -76,5 +90,14 @@ public class GameManager : MonoBehaviour
         highScoreText.text = "최고 점수 : " + highScore;
     }
 
+    public void GameOver()
+    {
+        Debug.Log("game over");
+        gamePlay = false;
+        //DataSaver.instance.dts.userName = ;
+        DataSaver.instance.dts.bestScore = highScore;
+        DataSaver.instance.dts.enemyKill = kill;
+        DataSaver.instance.SaveDataFn();
+    }
 
 }
