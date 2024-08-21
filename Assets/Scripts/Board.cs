@@ -119,8 +119,8 @@ public class Board : MonoBehaviour
                 LineClear(row);
                 ScoreUp();
 
-                AttackEnemy();
-                //데미지 두배 공격 추가
+                //
+                AttackLineClear();
             }
             else
             {
@@ -186,11 +186,29 @@ public class Board : MonoBehaviour
     {
         Debug.Log("공격");
 
-        Enemy enemy = FindObjectOfType<Enemy>();
-        if (enemy != null)
+        Enemy[] enemies = FindObjectsOfType<Enemy>();
+        GameManager.gm.player.GetComponent<Player>().AttackMotion();
+
+        foreach (Enemy enemy in enemies)
         {
-            enemy.TakeDamage();
+            enemy.TakeDamage(1);  // 적에게 10의 데미지를 입힙니다. 데미지 값은 상황에 맞게 조정하세요.
         }
+
+    }
+
+
+    public void AttackLineClear()
+    {
+        Debug.Log("전체 공격");
+
+        Enemy[] enemies = FindObjectsOfType<Enemy>();
+        GameManager.gm.player.GetComponent<Player>().AttackMotion();
+
+        foreach (Enemy enemy in enemies)
+        {
+            enemy.TakeDamage(5);  // 적에게 10의 데미지를 입힙니다. 데미지 값은 상황에 맞게 조정하세요.
+        }
+
     }
 
 

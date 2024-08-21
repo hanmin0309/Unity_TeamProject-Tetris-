@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+
 
 public class GameManager : MonoBehaviour
 {
@@ -12,14 +14,20 @@ public class GameManager : MonoBehaviour
     public float maxGameTime = 2 * 10f;
 
     [Header("# Player Info")]
+    public int health;
+    public int maxHealth;
     public int kill;
     public int score;
     public int highScore;
+
 
     [Header("# Game object")]
     public PoolManager pool;
     public Rigidbody2D player;
     public Rigidbody2D bossEndPoint;
+    public Text enemyKillText;
+    public Text scoreText;
+    public Text highScoreText;
 
     // Start is called before the first frame update
 
@@ -52,11 +60,21 @@ public class GameManager : MonoBehaviour
 
         gameTime += Time.deltaTime;
 
-        if(gameTime > maxGameTime)
+        if (gameTime > maxGameTime)
         {
             gameTime = maxGameTime;
-        } 
+        }
+
+
+        SetPlayerInfo();
     }
 
-    
+    public void SetPlayerInfo()
+    {
+        enemyKillText.text = "적 처치 수:" + kill;
+        scoreText.text = "점수 : " + score;
+        highScoreText.text = "최고 점수 : " + highScore;
+    }
+
+
 }
