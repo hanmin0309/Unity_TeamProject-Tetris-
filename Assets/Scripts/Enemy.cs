@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 public class Enemy : MonoBehaviour
 {
-
     public string type;
     public float speed;
     public float health;
@@ -68,13 +67,11 @@ public class Enemy : MonoBehaviour
     }
     void FixedUpdate()
     {
-        //if (!GameManager.instance.isLive)
-        //return;
 
-        if (!isLive || anim.GetCurrentAnimatorStateInfo(0).IsName("Hit"))
+        if (!isLive || anim.GetCurrentAnimatorStateInfo(0).IsName("Hit") || !GameManager.gm.gamePlay)
             return;
 
-        if (type == "Boss")
+        if (type == "Boss" )
         {
             float stoppingDistance = 0.1f;
             Vector2 dirVecEnd = bossEndPoint.position - rigid.position;
@@ -191,6 +188,11 @@ public class Enemy : MonoBehaviour
         else
         {
             CheckHealth();
+        }
+        if (type == "Boss")
+        {
+            GameManager.gm.bossHealth = (int)health;
+
         }
     }
 

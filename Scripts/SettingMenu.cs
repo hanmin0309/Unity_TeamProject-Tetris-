@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-//using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.UI;
@@ -8,27 +7,20 @@ using UnityEngine.UI;
 public class SettingMenu : MonoBehaviour
 {
     public AudioMixer audioMixer;
-
     public Dropdown resolutionDropdown;
-
-    Resolution[] resolutions;
-
     public GameObject panel;
-
+    private bool isOptionOpen = false;
     public bool GameIsPaused = false;
-
-    //public GameObject pauseMenuUI;
-
+    private Resolution[] resolutions;
 
     private void Start()
     {
         resolutions = Screen.resolutions;
-
         resolutionDropdown.ClearOptions();
 
         List<string> options = new List<string>();
-
         int currentResolutionIndex = 0;
+
         for (int i = 0; i < resolutions.Length; i++)
         {
             string option = resolutions[i].width + " X " + resolutions[i].height;
@@ -49,25 +41,44 @@ public class SettingMenu : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            StopGame();
-            
+            if (!isOptionOpen)
+            {
+                // 옵션 창이 열리면
+                AudioManager.instance.EffectBgm(true);
+                AudioManager.instance.LowerBgmVolume();
+                isOptionOpen = true;
+                StopGame();
+            }
+            else
+            {
+                // 옵션 창이 닫히면
+                AudioManager.instance.EffectBgm(false);
+                AudioManager.instance.RestoreBgmVolume();
+                isOptionOpen = false;
+                ResumeGame();
+            }
         }
     }
+
     void StopGame()
     {
-        // 패널의 활성화 상태를 반전
-        panel.SetActive(!panel.activeSelf);
-        GameIsPaused = panel.activeSelf;
-
-        Time.timeScale = 0f;
-
+        panel.SetActive(true);
+        Time.timeScale = 0f;  // 게임을 일시정지
     }
+
+    public void ResumeGame()
+    {
+        panel.SetActive(false);
+        Time.timeScale = 1f;  // 게임을 재개
+    }
+
     public void SetResolution(int resolutionIndex)
     {
         Resolution resolution = resolutions[resolutionIndex];
         Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
     }
-    public void SetVolume (float volume)
+
+    public void SetVolume(float volume)
     {
         audioMixer.SetFloat("volume", volume);
     }
@@ -77,7 +88,7 @@ public class SettingMenu : MonoBehaviour
         QualitySettings.SetQualityLevel(qualityIndex);
     }
 
-    public void SetFullScreen (bool isFullScreen)
+    public void SetFullScreen(bool isFullScreen)
     {
         Screen.fullScreen = isFullScreen;
     }
@@ -87,18 +98,4 @@ public class SettingMenu : MonoBehaviour
         Debug.Log("Quit");
         Application.Quit();
     }
-    
-    public void ResumeGame()
-    {
-        panel.SetActive(!panel.activeSelf);
-        Time.timeScale = 1f;
-        GameIsPaused = false;
-        
-    }
-
-    //public void pause()
-    //{
-    //    pauseMenuUI.SetActive(true);
-
-    //}
 }
