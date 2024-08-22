@@ -33,15 +33,6 @@ public class Player : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
-
-        if (health <= 0)
-        {
-            audioManager.PlaySFX(audioManager.defeat);
-            anim.SetTrigger("doDie");
-            return;
-        }
-
-        audioManager.PlaySFX(audioManager.Dead);
         anim.SetTrigger("doHit");
         health -= damage;
         //Debug.Log("슬라이더 값" + (float) health / maxHealth);

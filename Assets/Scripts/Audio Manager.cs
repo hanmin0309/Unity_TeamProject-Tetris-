@@ -17,7 +17,6 @@ public class AudioManager : MonoBehaviour
     public AudioClip victory;
     public AudioClip lose;
     public AudioClip levelUp;
-    public AudioClip Dead;
 
     private void Start()
     {
