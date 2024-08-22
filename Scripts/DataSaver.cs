@@ -10,7 +10,7 @@ public class DataToSave
     public string userName;
     public string userEmail;
     public int bestScore;
-    
+    public int enemyKill;
 }
 
 public class DataSaver : MonoBehaviour
@@ -19,6 +19,8 @@ public class DataSaver : MonoBehaviour
 
     public DataToSave dts;
     public string userId;
+    public string userName;
+    public int bestScore;
     DatabaseReference dbRef;
 
     DataSaver ds;
@@ -28,10 +30,12 @@ public class DataSaver : MonoBehaviour
         {
             instance = this;
             Debug.Log("DataSaver instance initialized.");
+            DontDestroyOnLoad(gameObject);
         }
         else if (instance != this)
         {
             Destroy(gameObject);
+
         }
 
         dbRef = FirebaseDatabase.DefaultInstance.RootReference;
@@ -39,16 +43,17 @@ public class DataSaver : MonoBehaviour
 
     public void SaveDataFn()
     {
+        Debug.Log("저장완료");
         string json = JsonUtility.ToJson(dts);
         dbRef.Child("users").Child(userId).SetRawJsonValueAsync(json);
     }
 
-    public void LoadDataFn()
+    public void LoadDataFn(Action onComplete = null)
     {
-        StartCoroutine(LoadDataEnum());
+        StartCoroutine(LoadDataEnum(onComplete));
     }
 
-    IEnumerator LoadDataEnum()
+    IEnumerator LoadDataEnum(Action onComplete = null)
     {
         var serverData = dbRef.Child("users").Child(userId).GetValueAsync();
         yield return new WaitUntil(predicate: () => serverData.IsCompleted);
@@ -63,11 +68,16 @@ public class DataSaver : MonoBehaviour
             print("process data found");
 
             dts = JsonUtility.FromJson<DataToSave>(jsonData);
+            userName = dts.userName;
+            bestScore = dts.bestScore;
         }
         else
         {
             print("no data found");
+            dts = null;
         }
+
+        onComplete?.Invoke();
     }
     // Start is called before the first frame update
     void Start()
