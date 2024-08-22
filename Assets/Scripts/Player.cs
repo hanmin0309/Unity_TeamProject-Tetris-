@@ -22,12 +22,17 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //anim.SetTrigger("doAttack");
     }
-
 
     public void TakeDamage(int damage)
     {
+
+        if (health <= 0)
+        {
+            anim.SetTrigger("doDie");
+            return;
+        }
+
         anim.SetTrigger("doHit");
         health -= damage;
         //Debug.Log("슬라이더 값" + (float) health / maxHealth);

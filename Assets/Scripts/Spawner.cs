@@ -31,6 +31,11 @@ public class Spawner : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (!GameManager.gm.gamePlay)
+        {
+            return;
+        }
+
         timer += Time.deltaTime;
 
         if (wave >= spawnData.Length)

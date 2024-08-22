@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 using Firebase.Auth;
 using Firebase;
 using Firebase.Extensions;
+using Firebase.Database;
 using System;
 using System.Threading.Tasks;
 
@@ -25,6 +26,7 @@ public class LoginSystem : MonoBehaviour
 
     Firebase.Auth.FirebaseAuth auth;
     Firebase.Auth.FirebaseUser user;
+    DatabaseReference databaseRef;
 
     public bool isSignIn = false;
     string errorTitle = "오류";
@@ -193,20 +195,24 @@ public class LoginSystem : MonoBehaviour
 
             Debug.LogFormat("Firebase user created successfully: {0} ({1})",
                 result.User.DisplayName, result.User.UserId);
-
-            if (result.User != null)
+            DataSaver.instance.userId = result.User.UserId;
+            DataSaver.instance.LoadDataFn(() =>
             {
-                // 사용자 정보 저장
-                DataSaver.instance.dts = new DataToSave
+                if (result.User != null)
                 {
-                    userName = signupUserName.text,
-                    userEmail = signupEmail.text,
-                    bestScore = 0 // 초기 값 설정
-                };
-                DataSaver.instance.userId = result.User.UserId;
-                DataSaver.instance.SaveDataFn();
+                    // 사용자 정보 저장
+                    DataSaver.instance.dts = new DataToSave
+                    {
+                        userName = signupUserName.text,
+                        userEmail = signupEmail.text,
+                        enemyKill = 0,
+                        bestScore = 0 // 초기 값 설정
+                    };
 
-            }
+                    DataSaver.instance.SaveDataFn();
+
+                }
+            });
 
             // 사용자 프로필 업데이트
             UpdateUserProfile(userName);
@@ -257,6 +263,18 @@ public class LoginSystem : MonoBehaviour
             DataSaver.instance.userId = result.User.UserId;
             DataSaver.instance.LoadDataFn();
 
+            if (DataSaver.instance.dts == null)
+            {
+                DataSaver.instance.dts = new DataToSave
+                {
+                    userName = result.User.DisplayName,
+                    userEmail = result.User.Email,
+                    bestScore = 0 // 초기 값 설정
+                };
+                DataSaver.instance.userId = result.User.UserId;
+                DataSaver.instance.SaveDataFn();
+            }
+
             OpenProfile();
         });
 
@@ -274,6 +292,7 @@ public class LoginSystem : MonoBehaviour
     void InitializeFirebase()
     {
         auth = Firebase.Auth.FirebaseAuth.DefaultInstance;
+        databaseRef = FirebaseDatabase.DefaultInstance.RootReference;
         auth.StateChanged += AuthStateChanged;
         AuthStateChanged(this, null);
     }
@@ -309,7 +328,7 @@ public class LoginSystem : MonoBehaviour
                 profileUserName.text = "" + user.DisplayName;
                 profileUserEmail.text = "" + user.Email;
 
-                profileButtonText.color = Color.white;
+                // profileButtonText.color = Color.white;
 
             }
         }
