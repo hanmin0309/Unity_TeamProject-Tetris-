@@ -40,8 +40,8 @@ public class Spawner : MonoBehaviour
 
         if (wave >= spawnData.Length)
         {
-            // Debug.Log("¸ðµç ·¹º§ ¿Ï·á");
-            return; // ´õ ÀÌ»ó ½ºÆù µ¥ÀÌÅÍ°¡ ¾øÀ¸¸é Á¾·áÇÕ´Ï´Ù.
+            // Debug.Log("ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ï·ï¿½");
+            return; // ï¿½ï¿½ ï¿½Ì»ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Í°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Õ´Ï´ï¿½.
         }
 
         if (timer > spawnData[wave].spawnTime && enemyCnt <= spawnData[wave].enemyCnt && !GameManager.gm.bossTime && wave < spawnData.Length)
@@ -59,8 +59,8 @@ public class Spawner : MonoBehaviour
         {
             if (wave == 1)
             {
-                //º¸½º¼ÒÈ¯
-                Debug.Log("º¸½º¼ÒÈ¯");
+                //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È¯
+                Debug.Log("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È¯");
                 GameObject enemy = GameManager.gm.pool.Get(1);
                 enemy.transform.position = spawnPoint[1].position;
                 GameManager.gm.bossTime = true;
@@ -77,7 +77,7 @@ public class Spawner : MonoBehaviour
             enemy.transform.position = spawnPoint[1].position;
             enemy.GetComponent<Enemy>().Init(spawnData[wave]);
             enemyCnt++;
-            Debug.Log("Àû »ý¼º ¼ö" + enemyCnt);
+            Debug.Log("ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½" + enemyCnt);
         }
 
     }

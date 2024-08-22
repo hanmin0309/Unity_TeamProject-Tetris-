@@ -38,11 +38,11 @@ public class GameManager : MonoBehaviour
         if (gm == null)
         {
             gm = this;
-            DontDestroyOnLoad(gameObject); // GameManager°¡ ¾À ÀüÈ¯ ½Ã »ç¶óÁöÁö ¾Êµµ·Ï ÇÔ
+            DontDestroyOnLoad(gameObject); // GameManagerï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½È¯ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Êµï¿½ï¿½ï¿½ ï¿½ï¿½
         }
         else
         {
-            Destroy(gameObject); // ÀÌ¹Ì gmÀÌ Á¸ÀçÇÏ¸é »õ·Î »ý¼ºµÈ GameManager¸¦ »èÁ¦
+            Destroy(gameObject); // ï¿½Ì¹ï¿½ gmï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï¸ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ GameManagerï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         }
         gamePlay = true;
     }
@@ -51,7 +51,7 @@ public class GameManager : MonoBehaviour
         //highScore = PlayerPrefs.GetInt("HighScore", 0);
         highScore = DataSaver.instance.bestScore;
 
-        //24-08-21 Sound(SFX)È¿°úÀ½ ÆíÁý
+        //24-08-21 Sound(SFX)È¿ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         AudioManager.instance.PlayBgm(true);
         AudioManager.instance.PlaySfx(AudioManager.Sfx.Upgrade);
         
@@ -71,7 +71,7 @@ public class GameManager : MonoBehaviour
             highScore = score;
             DataSaver.instance.bestScore = score;
 
-            PlayerPrefs.SetInt("HighScore", highScore); // ÃÖ°í ½ºÄÚ¾î¸¦ ÀúÀå
+            PlayerPrefs.SetInt("HighScore", highScore); // ï¿½Ö°ï¿½ ï¿½ï¿½ï¿½Ú¾î¸¦ ï¿½ï¿½ï¿½ï¿½
         }
 
         if (health <= 0)
@@ -92,9 +92,9 @@ public class GameManager : MonoBehaviour
 
     public void SetPlayerInfo()
     {
-        enemyKillText.text = "Àû Ã³Ä¡ ¼ö:" + kill;
-        scoreText.text = "Á¡¼ö : " + score;
-        highScoreText.text = "ÃÖ°í Á¡¼ö : " + highScore;
+        enemyKillText.text = "ï¿½ï¿½ Ã³Ä¡ ï¿½ï¿½:" + kill;
+        scoreText.text = "ï¿½ï¿½ï¿½ï¿½ : " + score;
+        highScoreText.text = "ï¿½Ö°ï¿½ ï¿½ï¿½ï¿½ï¿½ : " + highScore;
     }
 
 

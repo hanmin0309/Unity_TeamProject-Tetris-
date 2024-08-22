@@ -35,7 +35,7 @@ public class Player : MonoBehaviour
 
         anim.SetTrigger("doHit");
         health -= damage;
-        //Debug.Log("½½¶óÀÌ´õ °ª" + (float) health / maxHealth);
+        //Debug.Log("ï¿½ï¿½ï¿½ï¿½ï¿½Ì´ï¿½ ï¿½ï¿½" + (float) health / maxHealth);
         playerHpBar.value = (float)health / maxHealth;
         playerHpText.text = health + "/" + maxHealth;
         GameManager.gm.health = health;

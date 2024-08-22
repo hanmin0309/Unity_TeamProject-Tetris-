@@ -29,8 +29,8 @@ public class LoginSystem : MonoBehaviour
     DatabaseReference databaseRef;
 
     public bool isSignIn = false;
-    string errorTitle = "¿À·ù";
-    string title = "¾Ë¸²";
+    string errorTitle = "ï¿½ï¿½ï¿½ï¿½";
+    string title = "ï¿½Ë¸ï¿½";
     //public Text outputText;
 
     // Start is called before the first frame update
@@ -58,7 +58,7 @@ public class LoginSystem : MonoBehaviour
 
     public void OpenLoginPage()
     {
-        Debug.Log("·Î±×ÀÎ ÆäÀÌÁö");
+        Debug.Log("ï¿½Î±ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
         email.text = "";
         password.text = "";
 
@@ -69,7 +69,7 @@ public class LoginSystem : MonoBehaviour
 
     public void OpenSignUp()
     {
-        Debug.Log("È¸¿ø°¡ÀÔ");
+        Debug.Log("È¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
         loginPage.SetActive(false);
         signUpPage.SetActive(true);
         profilePage.SetActive(false);
@@ -80,7 +80,7 @@ public class LoginSystem : MonoBehaviour
     }
     public void OpenProfile()
     {
-        Debug.Log("ÇÁ·ÎÇÊ");
+        Debug.Log("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
         loginPage.SetActive(false);
         signUpPage.SetActive(false);
         profilePage.SetActive(true);
@@ -91,13 +91,13 @@ public class LoginSystem : MonoBehaviour
         if ((signupPassword.text != signupPassword1.text) && signupPassword1 != null)
         {
             checkPasswordText.color = Color.red;
-            checkPasswordText.text = "ÀÏÄ¡ÇÏÁö ¾Ê½À´Ï´Ù.";
+            checkPasswordText.text = "ï¿½ï¿½Ä¡ï¿½ï¿½ï¿½ï¿½ ï¿½Ê½ï¿½ï¿½Ï´ï¿½.";
             return;
         }
         else if ((signupPassword.text == signupPassword1.text) && signupPassword1 != null)
         {
             checkPasswordText.color = Color.green;
-            checkPasswordText.text = "ÀÏÄ¡ÇÕ´Ï´Ù.";
+            checkPasswordText.text = "ï¿½ï¿½Ä¡ï¿½Õ´Ï´ï¿½.";
         }
         else if (signupPassword == null && signupPassword1 == null)
         {
@@ -109,7 +109,7 @@ public class LoginSystem : MonoBehaviour
     {
         NotifiTitle.text = "" + title;
         NotifiMessage.text = "" + message;
-        Debug.Log("¾Ë¸²Ã¢");
+        Debug.Log("ï¿½Ë¸ï¿½Ã¢");
         notification.SetActive(true);
     }
 
@@ -118,7 +118,7 @@ public class LoginSystem : MonoBehaviour
 #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
 #else
-        Application.Quit(); // ¾îÇÃ¸®ÄÉÀÌ¼Ç Á¾·á
+        Application.Quit(); // ï¿½ï¿½ï¿½Ã¸ï¿½ï¿½ï¿½ï¿½Ì¼ï¿½ ï¿½ï¿½ï¿½ï¿½
 #endif
     }
 
@@ -153,7 +153,7 @@ public class LoginSystem : MonoBehaviour
     {
         if (string.IsNullOrEmpty(signupUserName.text))
         {
-            ShowNotification(errorTitle, "´Ð³×ÀÓÀ» ÀÔ·ÂÇÏ¼¼¿ä");
+            ShowNotification(errorTitle, "ï¿½Ð³ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ô·ï¿½ï¿½Ï¼ï¿½ï¿½ï¿½");
             return;
         }
 
@@ -200,13 +200,13 @@ public class LoginSystem : MonoBehaviour
             {
                 if (result.User != null)
                 {
-                    // »ç¿ëÀÚ Á¤º¸ ÀúÀå
+                    // ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
                     DataSaver.instance.dts = new DataToSave
                     {
                         userName = signupUserName.text,
                         userEmail = signupEmail.text,
                         enemyKill = 0,
-                        bestScore = 0 // ÃÊ±â °ª ¼³Á¤
+                        bestScore = 0 // ï¿½Ê±ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
                     };
 
                     DataSaver.instance.SaveDataFn();
@@ -214,12 +214,12 @@ public class LoginSystem : MonoBehaviour
                 }
             });
 
-            // »ç¿ëÀÚ ÇÁ·ÎÇÊ ¾÷µ¥ÀÌÆ®
+            // ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®
             UpdateUserProfile(userName);
 
-            ShowNotification(title, "È¸¿ø°¡ÀÔÀÌ ¿Ï·áµÇ¾ú½À´Ï´Ù.");
+            ShowNotification(title, "È¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ï·ï¿½Ç¾ï¿½ï¿½ï¿½ï¿½Ï´ï¿½.");
             Logout();
-            Debug.Log("È¸¿ø°¡ÀÔ ¹× µ¥ÀÌÅÍ ÀúÀåÀÌ ¿Ï·áµÇ¾ú½À´Ï´Ù.");
+            Debug.Log("È¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ï·ï¿½Ç¾ï¿½ï¿½ï¿½ï¿½Ï´ï¿½.");
 
         });
     }
@@ -269,7 +269,7 @@ public class LoginSystem : MonoBehaviour
                 {
                     userName = result.User.DisplayName,
                     userEmail = result.User.Email,
-                    bestScore = 0 // ÃÊ±â °ª ¼³Á¤
+                    bestScore = 0 // ï¿½Ê±ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
                 };
                 DataSaver.instance.userId = result.User.UserId;
                 DataSaver.instance.SaveDataFn();
@@ -390,34 +390,34 @@ public class LoginSystem : MonoBehaviour
         switch (errorCode)
         {
             case AuthError.InvalidEmail:
-                message = "Àß¸øµÈ ÀÌ¸ÞÀÏ Çü½Ä";
-                Debug.LogError("Àß¸øµÈ ÀÌ¸ÞÀÏ Çü½Ä");
+                message = "ï¿½ß¸ï¿½ï¿½ï¿½ ï¿½Ì¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½";
+                Debug.LogError("ï¿½ß¸ï¿½ï¿½ï¿½ ï¿½Ì¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
                 break;
             case AuthError.MissingEmail:
-                message = "ÀÌ¸ÞÀÏÀ» ÀÔ·ÂÇÏ¼¼¿ä";
+                message = "ï¿½Ì¸ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ô·ï¿½ï¿½Ï¼ï¿½ï¿½ï¿½";
                 break;
             case AuthError.MissingPassword:
-                message = "ºñ¹Ð¹øÈ£¸¦ ÀÔ·ÂÇÏ¼¼¿ä";
+                message = "ï¿½ï¿½Ð¹ï¿½È£ï¿½ï¿½ ï¿½Ô·ï¿½ï¿½Ï¼ï¿½ï¿½ï¿½";
                 break;
             case AuthError.WrongPassword:
-                message = "ºñ¹Ð¹øÈ£°¡ ÀÏÄ¡ÇÏÁö¾Ê½À´Ï´Ù.";
-                Debug.LogError("ºñ¹Ð¹øÈ£°¡ ÀÏÄ¡ÇÏÁö¾Ê½À´Ï´Ù.");
+                message = "ï¿½ï¿½Ð¹ï¿½È£ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ï¿½ï¿½ï¿½Ê½ï¿½ï¿½Ï´ï¿½.";
+                Debug.LogError("ï¿½ï¿½Ð¹ï¿½È£ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ï¿½ï¿½ï¿½Ê½ï¿½ï¿½Ï´ï¿½.");
                 break;
             case AuthError.UserNotFound:
-                message = "»ç¿ëÀÚ¸¦ Ã£À» ¼ö ¾øÀ½";
-                Debug.LogError("»ç¿ëÀÚ¸¦ Ã£À» ¼ö ¾øÀ½");
+                message = "ï¿½ï¿½ï¿½ï¿½Ú¸ï¿½ Ã£ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½";
+                Debug.LogError("ï¿½ï¿½ï¿½ï¿½Ú¸ï¿½ Ã£ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
                 break;
             case AuthError.EmailAlreadyInUse:
-                message = "ÀÌ ÀÌ¸ÞÀÏÀº ÀÌ¹Ì »ç¿ë ÁßÀÔ´Ï´Ù.";
-                Debug.LogError("ÀÌ ÀÌ¸ÞÀÏÀº ÀÌ¹Ì »ç¿ë ÁßÀÔ´Ï´Ù.");
+                message = "ï¿½ï¿½ ï¿½Ì¸ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¹ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ô´Ï´ï¿½.";
+                Debug.LogError("ï¿½ï¿½ ï¿½Ì¸ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¹ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ô´Ï´ï¿½.");
                 break;
             case AuthError.WeakPassword:
-                message = "ºñ¹Ð¹øÈ£°¡ ³Ê¹« ¾àÇÕ´Ï´Ù.\n(6±ÛÀÚ ÀÌ»ó)";
-                Debug.LogError("ºñ¹Ð¹øÈ£°¡ ³Ê¹« ¾àÇÕ´Ï´Ù");
+                message = "ï¿½ï¿½Ð¹ï¿½È£ï¿½ï¿½ ï¿½Ê¹ï¿½ ï¿½ï¿½ï¿½Õ´Ï´ï¿½.\n(6ï¿½ï¿½ï¿½ï¿½ ï¿½Ì»ï¿½)";
+                Debug.LogError("ï¿½ï¿½Ð¹ï¿½È£ï¿½ï¿½ ï¿½Ê¹ï¿½ ï¿½ï¿½ï¿½Õ´Ï´ï¿½");
                 break;
             // Add more cases as needed
             default:
-                message = "Àß¸øµÈ ¿À·ù";
+                message = "ï¿½ß¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½";
                 Debug.LogError($"Unrecognized error code: {errorCode}, AuthError: {errorCode}");
                 break;
         }

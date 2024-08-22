@@ -50,7 +50,7 @@ public class Enemy : MonoBehaviour
         //spriter.sortingOrder = 2;
         anim.SetBool("Dead", false);
 
-        //Debug.Log("onenable Ã¼·Â " + health);
+        //Debug.Log("onenable Ã¼ï¿½ï¿½ " + health);
 
         health = maxHealth;
         hpText.text = health + "/" + maxHealth;
@@ -61,7 +61,7 @@ public class Enemy : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Debug.Log("start Ã¼·Â " + health);
+        Debug.Log("start Ã¼ï¿½ï¿½ " + health);
         health = maxHealth;
         hpText.text = health + "/" + maxHealth;
         hpSlider.value = 1;
@@ -103,7 +103,7 @@ public class Enemy : MonoBehaviour
         {
             float stoppingDistance = 1.2f;
             Vector2 dirVec = target.position - rigid.position;
-            //Debug.Log("°Å¸® :"+dirVec.magnitude);
+            //Debug.Log("ï¿½Å¸ï¿½ :"+dirVec.magnitude);
             if (dirVec.magnitude > stoppingDistance)
             {
                 anim.SetTrigger("Run");
@@ -134,7 +134,6 @@ public class Enemy : MonoBehaviour
 
 
 
-
     private void OnTriggerStay2D(Collider2D collision)
     {
         if (!collision.CompareTag("Player") || !isLive)
@@ -144,7 +143,7 @@ public class Enemy : MonoBehaviour
 
         if (!isAttacking && currentState == State.Moving)
         {
-            Debug.Log("ÄÚ·çÆ¾ ½ÇÇà");
+            Debug.Log("ï¿½Ú·ï¿½Æ¾ ï¿½ï¿½ï¿½ï¿½");
             currentState = State.Attacking;
             StartCoroutine("AttackPlayer");
         }
@@ -155,16 +154,16 @@ public class Enemy : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player"))
         {
-            Debug.Log("ÄÚ·çÆ¾ Áß´Ü");
-            currentState = State.Moving;  // ÇÃ·¹ÀÌ¾î°¡ ¹üÀ§¸¦ ¹þ¾î³ª¸é ÀÌµ¿ »óÅÂ·Î ÀüÈ¯
-            StopCoroutine("AttackPlayer");  // ÄÚ·çÆ¾ ÁßÁö
+            Debug.Log("ï¿½Ú·ï¿½Æ¾ ï¿½ß´ï¿½");
+            currentState = State.Moving;  // ï¿½Ã·ï¿½ï¿½Ì¾î°¡ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½î³ªï¿½ï¿½ ï¿½Ìµï¿½ ï¿½ï¿½ï¿½Â·ï¿½ ï¿½ï¿½È¯
+            StopCoroutine("AttackPlayer");  // ï¿½Ú·ï¿½Æ¾ ï¿½ï¿½ï¿½ï¿½
             isAttacking = false;
         }
     }
 
     IEnumerator KnockBack()
     {
-        Debug.Log("³Ë¹é ½ÇÇà");
+        Debug.Log("ï¿½Ë¹ï¿½ ï¿½ï¿½ï¿½ï¿½");
         yield return wait;
         Vector3 playerPos = GameManager.gm.player.transform.position;
         Vector3 dirVec = transform.position - playerPos;
@@ -174,7 +173,7 @@ public class Enemy : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
-        //Debug.Log("µ¥¹ÌÁö ÀÔÀ½");
+        //Debug.Log("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
         StartCoroutine(KnockBack());
 
         if (health > 0)
@@ -207,14 +206,14 @@ public class Enemy : MonoBehaviour
         {
             if (type == "Boss")
             {
-                Debug.Log("º¸½º °ø°Ý");
+                Debug.Log("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
                 anim.SetTrigger("Attack");
                 target.GetComponent<Player>().TakeDamage(damage);
                 yield return new WaitForSeconds(5f);
             }
             else
             {
-                Debug.Log("ÀÏ¹Ý¸÷ÀÌ °ø°Ý");
+                Debug.Log("ï¿½Ï¹Ý¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
                 anim.SetTrigger("Attack");
                 target.GetComponent<Player>().TakeDamage(damage);
                 yield return new WaitForSeconds(3f);
@@ -242,7 +241,7 @@ public class Enemy : MonoBehaviour
 
     public void Dead()
     {
-        Debug.Log("Dead ÇÔ¼ö È£ÃâµÊ");
+        Debug.Log("Dead ï¿½Ô¼ï¿½ È£ï¿½ï¿½ï¿½");
 
         if (type == "Boss")
         {

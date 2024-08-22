@@ -35,7 +35,6 @@ public class DataSaver : MonoBehaviour
         else if (instance != this)
         {
             Destroy(gameObject);
-
         }
 
         dbRef = FirebaseDatabase.DefaultInstance.RootReference;
@@ -43,7 +42,7 @@ public class DataSaver : MonoBehaviour
 
     public void SaveDataFn()
     {
-        Debug.Log("ÀúÀå¿Ï·á");
+        Debug.Log("ï¿½ï¿½ï¿½ï¿½Ï·ï¿½");
         string json = JsonUtility.ToJson(dts);
         dbRef.Child("users").Child(userId).SetRawJsonValueAsync(json);
     }
