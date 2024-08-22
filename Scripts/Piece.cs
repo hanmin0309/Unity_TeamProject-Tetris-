@@ -53,6 +53,11 @@ public class Piece : MonoBehaviour
 
         if (stopGame) return; // If the game is paused, skip the rest of the update
 
+        if(GameManager.gm.health <= 0 || !GameManager.gm.gamePlay)
+        {
+            return;
+        }
+
         board.Clear(this);
 
         // We use a timer to allow the player to make adjustments to the piece

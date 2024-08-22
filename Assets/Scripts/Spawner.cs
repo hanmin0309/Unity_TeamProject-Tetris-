@@ -33,6 +33,7 @@ public class Spawner : MonoBehaviour
     {
         if (!GameManager.gm.gamePlay)
         {
+            Debug.Log("°ÔÀÓ ¿À¹ö");
             return;
         }
 
@@ -80,6 +81,14 @@ public class Spawner : MonoBehaviour
             Debug.Log("ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½" + enemyCnt);
         }
 
+    }
+
+    private IEnumerator SpawnBossAfterDelay()
+    {
+        // ´ë±â ½Ã°£ µ¿¾È ´ë±â
+        yield return new WaitForSeconds(10f);
+
+        // ¿©±â¼­ º¸½º »ý¼º ÄÚµå¸¦ È£ÃâÇÕ´Ï´Ù.
     }
 }
 

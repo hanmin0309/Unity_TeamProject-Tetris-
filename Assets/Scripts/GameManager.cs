@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 
 public class GameManager : MonoBehaviour
@@ -16,6 +17,7 @@ public class GameManager : MonoBehaviour
 
     [Header("# Player Info")]
     public int health;
+    public int bossHealth;
     public int maxHealth;
     public int kill;
     public int score;
@@ -49,7 +51,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         //highScore = PlayerPrefs.GetInt("HighScore", 0);
-        highScore = DataSaver.instance.bestScore;
+        highScore = DataSaver.instance.bestScore;   
 
         //24-08-21 Sound(SFX)È¿ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         AudioManager.instance.PlayBgm(true);
@@ -65,7 +67,6 @@ public class GameManager : MonoBehaviour
             return;
         }
 
-
         if (score > highScore)
         {
             highScore = score;
@@ -77,6 +78,11 @@ public class GameManager : MonoBehaviour
         if (health <= 0)
         {
             GameOver();
+        }
+
+        if(bossHealth <= 0)
+        {
+            GameEnd();
         }
 
         gameTime += Time.deltaTime;
@@ -105,6 +111,17 @@ public class GameManager : MonoBehaviour
         DataSaver.instance.dts.bestScore = highScore;
         DataSaver.instance.dts.enemyKill = kill;
         DataSaver.instance.SaveDataFn();
+    }
+
+    public void GameEnd()
+    {
+        Debug.Log("¼º°ø");
+    }
+
+
+    public void Retry()
+    {
+        SceneManager.LoadScene("Tetris_Fighter");
     }
 
 
