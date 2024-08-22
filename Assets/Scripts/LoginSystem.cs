@@ -81,6 +81,8 @@ public class LoginSystem : MonoBehaviour
     public void OpenProfile()
     {
         Debug.Log("ÇÁ·ÎÇÊ");
+
+        RankingManager.instance.GetUserRank();
         loginPage.SetActive(false);
         signUpPage.SetActive(false);
         profilePage.SetActive(true);
@@ -321,13 +323,25 @@ public class LoginSystem : MonoBehaviour
                 Debug.Log("Signed in " + user.Email);
                 Debug.Log("Signed in " + user.DisplayName);
 
+
+
                 loginButton.gameObject.SetActive(false);
                 startButton.gameObject.SetActive(true);
+
                 profileButton.GetComponent<Button>().interactable = true;
 
                 profileUserName.text = "" + user.DisplayName;
                 profileUserEmail.text = "" + user.Email;
 
+                if (RankingManager.instance != null)
+                {
+                    RankingManager.instance.userId = user.UserId;
+                    RankingManager.instance.GetUserRank();
+                }
+                else
+                {
+                    Debug.LogError("RankingManager.instance is null");
+                }
                 // profileButtonText.color = Color.white;
 
             }

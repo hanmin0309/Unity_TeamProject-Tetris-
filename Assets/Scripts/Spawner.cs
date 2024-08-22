@@ -33,6 +33,7 @@ public class Spawner : MonoBehaviour
     {
         if (!GameManager.gm.gamePlay)
         {
+            Debug.Log("게임 오버");
             return;
         }
 
@@ -80,6 +81,14 @@ public class Spawner : MonoBehaviour
             Debug.Log("적 생성 수" + enemyCnt);
         }
 
+    }
+
+    private IEnumerator SpawnBossAfterDelay()
+    {
+        // 대기 시간 동안 대기
+        yield return new WaitForSeconds(10f);
+
+        // 여기서 보스 생성 코드를 호출합니다.
     }
 }
 

@@ -58,6 +58,7 @@ public class Board : MonoBehaviour
     private void GameOver()
     {
         this.tilemap.ClearAllTiles();
+        GameManager.gm.GameOver();
 
     }
 
