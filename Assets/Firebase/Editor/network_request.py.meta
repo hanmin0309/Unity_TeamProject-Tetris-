@@ -1,0 +1,11 @@
+fileFormatVersion: 2
+guid: a98dbb76ab492344098c1a548ecd1aea
+labels:
+- gvh
+- gvh_version-12.1.0
+- gvhp_exportpath-Firebase/Editor/network_request.py
+timeCreated: 1480838400
+DefaultImporter:
+  userData:
+  assetBundleName:
+  assetBundleVariant:

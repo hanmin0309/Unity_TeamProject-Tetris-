@@ -17,7 +17,7 @@ public class Board : MonoBehaviour
     {
         get
         {
-            Vector2Int position = new Vector2Int(-this.boardSize.x/2, -this.boardSize.y/2);
+            Vector2Int position = new Vector2Int(-this.boardSize.x / 2, -this.boardSize.y / 2);
             return new RectInt(position, this.boardSize);
         }   // 테트리스 맵 중앙을 기준좌표(0,0) => 구하기위해 좌측하단 (-,-)에서 시작해야함 
             // 그래서 위에 Postion 이라는 변수에 this(현재스크립트).boardsize에 음수를 붙인것임.
@@ -30,7 +30,7 @@ public class Board : MonoBehaviour
         for (int i = 0; i < tetrominoes.Length; i++)
         {
             this.tetrominoes[i].Initialize();
-        }  
+        }
     }
 
     private void Start()
@@ -68,6 +68,7 @@ public class Board : MonoBehaviour
             Vector3Int tilePositon = piece.cells[i] + piece.position;
             tilemap.SetTile(tilePositon, piece.data.tile);
         }
+
     }
 
     public void Clear(Piece piece)
@@ -111,12 +112,15 @@ public class Board : MonoBehaviour
         RectInt bounds = this.Bounds;
         int row = bounds.yMin; //x = -10 , y = -20
 
-        while(row < bounds.yMax)
+        while (row < bounds.yMax)
         {
             if (IsLineFull(row))
             {
                 LineClear(row);
                 ScoreUp();
+
+                AttackEnemy();
+                //데미지 두배 공격 추가
             }
             else
             {
@@ -126,14 +130,14 @@ public class Board : MonoBehaviour
 
     }
 
-   /// <summary> 2024-08-12 점수부분 추가
-   
+    /// <summary> 2024-08-12 점수부분 추가
+
     public void ScoreUp()
     {
         GameManager.gm.score += 100;
     }
-  
-   /// <returns></returns>
+
+    /// <returns></returns>
 
     private bool IsLineFull(int row)
     {
@@ -144,7 +148,7 @@ public class Board : MonoBehaviour
             Vector3Int position = new Vector3Int(col, row, 0);
 
             if (!tilemap.HasTile(position))
-                //해당위치에 타일이 존재하지 않는다면, 행이 가득차지 않았음을 의미
+            //해당위치에 타일이 존재하지 않는다면, 행이 가득차지 않았음을 의미
             {
                 return false; // 타일이 전부 차지 않았으니 줄이 차지 않은걸로 판명
             }
@@ -157,7 +161,7 @@ public class Board : MonoBehaviour
     {
         RectInt bounds = Bounds;
 
-        for (int col = bounds.xMin; col<bounds.xMax; col++)
+        for (int col = bounds.xMin; col < bounds.xMax; col++)
         {
             Vector3Int position = new Vector3Int(col, row, 0);
             tilemap.SetTile(position, null);
@@ -177,7 +181,17 @@ public class Board : MonoBehaviour
             row++;
         }
     }
-    
-    
-  
+
+    public void AttackEnemy()
+    {
+        Debug.Log("공격");
+
+        Enemy enemy = FindObjectOfType<Enemy>();
+        if (enemy != null)
+        {
+            enemy.TakeDamage();
+        }
+    }
+
+
 }
