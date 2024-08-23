@@ -21,7 +21,7 @@ public class Player : MonoBehaviour
     }
     void Start()
     {
-
+        
     }
 
     // Update is called once per frame
@@ -33,6 +33,14 @@ public class Player : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
+
+        if (health <= 0)
+        {
+            anim.SetTrigger("doDie");
+            GameManager.gm.GameOver();
+            return;
+        }
+
         anim.SetTrigger("doHit");
         health -= damage;
         //Debug.Log("슬라이더 값" + (float) health / maxHealth);
