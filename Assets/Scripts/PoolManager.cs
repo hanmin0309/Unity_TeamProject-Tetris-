@@ -20,6 +20,12 @@ public class PoolManager : MonoBehaviour
         Debug.Log(pools.Length);
     }
 
+    private void Start()
+    {
+        
+    }
+
+
     public GameObject Get(int index)
     {
         GameObject select = null;

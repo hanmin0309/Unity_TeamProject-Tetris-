@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class SettingMenu : MonoBehaviour
 {
-    public AudioMixer audioMixer;
+    //public AudioMixer audioMixer;
     public Dropdown resolutionDropdown;
     public GameObject panel;
     private bool isOptionOpen = false;
@@ -44,16 +44,16 @@ public class SettingMenu : MonoBehaviour
             if (!isOptionOpen)
             {
                 // 옵션 창이 열리면
-                AudioManager.instance.EffectBgm(true);
-                AudioManager.instance.LowerBgmVolume();
+                //AudioManager.instance.EffectBgm(true);
+                //AudioManager.instance.LowerBgmVolume();
                 isOptionOpen = true;
                 StopGame();
             }
             else
             {
                 // 옵션 창이 닫히면
-                AudioManager.instance.EffectBgm(false);
-                AudioManager.instance.RestoreBgmVolume();
+                //AudioManager.instance.EffectBgm(false);
+                //AudioManager.instance.RestoreBgmVolume();
                 isOptionOpen = false;
                 ResumeGame();
             }
@@ -78,10 +78,10 @@ public class SettingMenu : MonoBehaviour
         Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
     }
 
-    public void SetVolume(float volume)
-    {
-        audioMixer.SetFloat("volume", volume);
-    }
+    //public void SetVolume(float volume)
+    //{
+    //    audioMixer.SetFloat("volume", volume);
+    //}
 
     public void SetQuality(int qualityIndex)
     {

@@ -31,12 +31,6 @@ public class Spawner : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!GameManager.gm.gamePlay)
-        {
-            Debug.Log("게임 오버");
-            return;
-        }
-
         timer += Time.deltaTime;
 
         if (wave >= spawnData.Length)
@@ -62,9 +56,7 @@ public class Spawner : MonoBehaviour
             {
                 //보스소환
                 Debug.Log("보스소환");
-                GameObject enemy = GameManager.gm.pool.Get(1);
-                enemy.transform.position = spawnPoint[1].position;
-                GameManager.gm.bossTime = true;
+                StartCoroutine("SpawnBossAfterDelay");
             }
 
             enemyCnt = 0;
@@ -85,10 +77,11 @@ public class Spawner : MonoBehaviour
 
     private IEnumerator SpawnBossAfterDelay()
     {
-        // 대기 시간 동안 대기
+     
         yield return new WaitForSeconds(10f);
-
-        // 여기서 보스 생성 코드를 호출합니다.
+        GameObject enemy = GameManager.gm.pool.Get(1);
+        enemy.transform.position = spawnPoint[1].position;
+        GameManager.gm.bossTime = true;
     }
 }
 

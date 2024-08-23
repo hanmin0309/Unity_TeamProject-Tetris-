@@ -31,6 +31,13 @@ public class GameManager : MonoBehaviour
     public Text enemyKillText;
     public Text scoreText;
     public Text highScoreText;
+    public GameObject endPanel;
+    public GameObject rankPanel;
+    public Text endScoreText;
+    public Text TitleText;
+    public Text endBestScoreText;
+    public Text endRankingText;
+    public Text endRankingAllText;
 
     // Start is called before the first frame update
 
@@ -46,22 +53,26 @@ public class GameManager : MonoBehaviour
         {
             Destroy(gameObject); // 이미 gm이 존재하면 새로 생성된 GameManager를 삭제
         }
+
         gamePlay = true;
+
     }
     void Start()
     {
         //highScore = PlayerPrefs.GetInt("HighScore", 0);
-        highScore = DataSaver.instance.bestScore;   
+        highScore = DataSaver.instance.bestScore;
+        gamePlay = true;
 
         //24-08-21 Sound(SFX)효과음 편집
-        AudioManager.instance.PlayBgm(true);
-        AudioManager.instance.PlaySfx(AudioManager.Sfx.Upgrade);
-        
+        //AudioManager.instance.PlayBgm(true);
+        //AudioManager.instance.PlaySfx(AudioManager.Sfx.Upgrade);
+
     }
 
     // Update is called once per frame
     void Update()
     {
+
         if (!gamePlay)
         {
             return;
@@ -72,7 +83,7 @@ public class GameManager : MonoBehaviour
             highScore = score;
             DataSaver.instance.bestScore = score;
 
-            PlayerPrefs.SetInt("HighScore", highScore); // 최고 스코어를 저장
+            //PlayerPrefs.SetInt("HighScore", highScore); // 최고 스코어를 저장
         }
 
         if (health <= 0)
@@ -80,9 +91,10 @@ public class GameManager : MonoBehaviour
             GameOver();
         }
 
-        if(bossHealth <= 0)
+        if (bossHealth <= 0)
         {
             GameEnd();
+            GameOver();
         }
 
         gameTime += Time.deltaTime;
@@ -103,7 +115,6 @@ public class GameManager : MonoBehaviour
         highScoreText.text = "최고 점수 : " + highScore;
     }
 
-
     public void GameOver()
     {
         Debug.Log("game over");
@@ -111,18 +122,53 @@ public class GameManager : MonoBehaviour
         DataSaver.instance.dts.bestScore = highScore;
         DataSaver.instance.dts.enemyKill = kill;
         DataSaver.instance.SaveDataFn();
+
+        OpenDeadPanel();
+       
     }
 
     public void GameEnd()
     {
-        Debug.Log("성공");
+
     }
 
+    public void OpenDeadPanel()
+    {
+        endPanel.SetActive(true);
+        RankingManager.instance.GetAllRank(endRankingAllText, endRankingText);
+        endScoreText.text = "" + score;
+        endBestScoreText.text = "" + highScore;
+        //RankingManager.instance.GetUserRank();
+
+    }
+
+    public void CloseDeadPanel()
+    {
+        endPanel.SetActive(false);
+
+    }
+
+    public void OpenRankPanel()
+    {
+        rankPanel.SetActive(true);
+    }
+    public void OnExit()
+    {
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
+        Application.Quit(); // 어플리케이션 종료
+#endif
+    }
+    public void CloseRankPanel()
+    {
+        rankPanel.SetActive(false);
+    }
 
     public void Retry()
     {
+        GameManager.gm.gamePlay = true;
+        GameManager.gm.health = 100;
         SceneManager.LoadScene("Tetris_Fighter");
     }
-
-
 }

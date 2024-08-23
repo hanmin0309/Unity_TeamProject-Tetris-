@@ -31,7 +31,9 @@ public class RankingManager : MonoBehaviour
     public string userId; // 현재 유저의 ID
     public int userRank;
     public int bestScore; // 자신의 최고 점수
+    public GameObject RankPanel;
     public Text rankText;
+
     // Start is called before the first frame update
 
     private void Awake()
@@ -83,7 +85,7 @@ public class RankingManager : MonoBehaviour
                         bestScore = allScores[i].bestScore;
                         Debug.Log("Your Rank: " + userRank);
                         Debug.Log("Your Best Score: " + bestScore);
-                        rankText.text = ""+ userRank;
+                        rankText.text = "" + userRank;
                         break;
                     }
                 }
@@ -91,7 +93,68 @@ public class RankingManager : MonoBehaviour
                 if (userRank == 0)
                 {
                     Debug.Log("Your score is not ranked.");
+                    rankText.text = "순위없음" ;
                 }
+            }
+            else
+            {
+                Debug.LogError("Failed to retrieve scores: " + task.Exception);
+            }
+        });
+    }
+
+    public void GetAllRank(Text targetText, Text targetText1)
+    {
+        databaseReference.Child("users").OrderByChild("bestScore").GetValueAsync().ContinueWithOnMainThread(task =>
+        {
+            if (task.IsCompleted)
+            {
+                DataSnapshot snapshot = task.Result;
+
+                List<UserScore> allScores = new List<UserScore>();
+                foreach (DataSnapshot child in snapshot.Children)
+                {
+                    string userId = child.Key;
+                    string userName = child.Child("userName").Value.ToString();
+                    int bestScore = int.Parse(child.Child("bestScore").Value.ToString());
+                    allScores.Add(new UserScore(userId, userName, bestScore));
+                }
+
+                // 점수를 기준으로 내림차순 정렬
+                allScores.Sort((a, b) => b.bestScore.CompareTo(a.bestScore));
+
+                targetText.text = ""; // 초기화
+                int rank = 1;
+                foreach (var userScore in allScores)
+                {
+                    if (rank > 10) break; // 상위 10명까지만 표시
+
+                    targetText.text += $"{rank}. {userScore.userName}: {userScore.bestScore}\n";
+                    rank++;
+                }
+
+                userRank = 0;
+                // 유저의 랭크 찾기
+                for (int i = 0; i < allScores.Count; i++)
+                {
+                    if (allScores[i].userId == userId)
+                    {
+                        userRank = i + 1;
+                        Debug.Log("All User: " + allScores[i]);
+                        bestScore = allScores[i].bestScore;
+                        Debug.Log("Your Rank: " + userRank);
+                        Debug.Log("Your Best Score: " + bestScore);
+                        targetText1.text = "" + userRank;
+                        break;
+                    }
+                }
+
+                if (userRank == 0)
+                {
+                    Debug.Log("Your score is not ranked.");
+                    targetText1.text = "점수 없음";
+                }
+
             }
             else
             {

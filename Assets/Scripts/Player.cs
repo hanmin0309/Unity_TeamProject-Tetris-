@@ -12,17 +12,24 @@ public class Player : MonoBehaviour
     public Slider playerHpBar;
     public Text playerHpText;
 
+    AudioManager audioManager;
 
     // Start is called before the first frame update
+    private void Awake()
+    {
+        audioManager = GameObject.FindGameObjectWithTag ("AudioManager").GetComponent<AudioManager> ();
+    }
     void Start()
     {
-
+        
     }
 
     // Update is called once per frame
     void Update()
     {
+        //anim.SetTrigger("doAttack");
     }
+
 
     public void TakeDamage(int damage)
     {
@@ -30,6 +37,7 @@ public class Player : MonoBehaviour
         if (health <= 0)
         {
             anim.SetTrigger("doDie");
+            GameManager.gm.GameOver();
             return;
         }
 
@@ -45,7 +53,7 @@ public class Player : MonoBehaviour
 
     public void AttackMotion()
     {
-        AudioManager.instance.PlaySfx(AudioManager.Sfx.Sword);
+        audioManager.PlaySFX(audioManager.sword);
         anim.SetTrigger("doAttack");
     }
 }
