@@ -129,6 +129,11 @@ public class Enemy : MonoBehaviour
             isAttacking = false;
 
             anim.SetBool("Dead", true);
+
+            if(type == "Boss")
+            {
+                GameManager.gm.GameOver();
+            }
         }
     }
 

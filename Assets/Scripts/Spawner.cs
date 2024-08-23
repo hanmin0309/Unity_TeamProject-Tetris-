@@ -56,9 +56,7 @@ public class Spawner : MonoBehaviour
             {
                 //보스소환
                 Debug.Log("보스소환");
-                GameObject enemy = GameManager.gm.pool.Get(1);
-                enemy.transform.position = spawnPoint[1].position;
-                GameManager.gm.bossTime = true;
+                StartCoroutine("SpawnBossAfterDelay");
             }
 
             enemyCnt = 0;
@@ -75,6 +73,15 @@ public class Spawner : MonoBehaviour
             Debug.Log("적 생성 수" + enemyCnt);
         }
 
+    }
+
+    private IEnumerator SpawnBossAfterDelay()
+    {
+     
+        yield return new WaitForSeconds(10f);
+        GameObject enemy = GameManager.gm.pool.Get(1);
+        enemy.transform.position = spawnPoint[1].position;
+        GameManager.gm.bossTime = true;
     }
 }
 
